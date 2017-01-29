@@ -5,6 +5,14 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApIosMessengerService", "ApIosMessengerService\ApIosMessengerService.csproj", "{902F363F-ED87-461E-B0B3-EA7B6B0CC212}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApIosMessenger.EF", "ApIosMessenger.EF\ApIosMessenger.EF.csproj", "{4C309FFB-4BDC-4A14-9985-8BB799D05D67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApIosMessenger.Converters", "ApIosMessenger.Converters\ApIosMessenger.Converters.csproj", "{C9ECDED5-22B4-4F8D-BD37-ACB173985699}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApIosMessenger.Services", "ApIosMessenger.Services\ApIosMessenger.Services.csproj", "{94AD577D-1F92-4FF4-BC4B-AE7668D22619}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApIosMessenger.Test", "ApIosMessenger.Test\ApIosMessenger.Test.csproj", "{FF9BE07E-38DB-4A7E-9639-6E40681A210B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +23,22 @@ Global
 		{902F363F-ED87-461E-B0B3-EA7B6B0CC212}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{902F363F-ED87-461E-B0B3-EA7B6B0CC212}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{902F363F-ED87-461E-B0B3-EA7B6B0CC212}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C309FFB-4BDC-4A14-9985-8BB799D05D67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C309FFB-4BDC-4A14-9985-8BB799D05D67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C309FFB-4BDC-4A14-9985-8BB799D05D67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C309FFB-4BDC-4A14-9985-8BB799D05D67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9ECDED5-22B4-4F8D-BD37-ACB173985699}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9ECDED5-22B4-4F8D-BD37-ACB173985699}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9ECDED5-22B4-4F8D-BD37-ACB173985699}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9ECDED5-22B4-4F8D-BD37-ACB173985699}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94AD577D-1F92-4FF4-BC4B-AE7668D22619}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94AD577D-1F92-4FF4-BC4B-AE7668D22619}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94AD577D-1F92-4FF4-BC4B-AE7668D22619}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94AD577D-1F92-4FF4-BC4B-AE7668D22619}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF9BE07E-38DB-4A7E-9639-6E40681A210B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF9BE07E-38DB-4A7E-9639-6E40681A210B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF9BE07E-38DB-4A7E-9639-6E40681A210B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF9BE07E-38DB-4A7E-9639-6E40681A210B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
