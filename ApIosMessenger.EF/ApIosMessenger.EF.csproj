@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccess\ContactsProvider.cs" />
+    <Compile Include="DataAccess\UsersProvider.cs" />
     <Compile Include="EFContext.cs" />
     <Compile Include="Models\Chat.cs" />
     <Compile Include="Models\Message.cs" />

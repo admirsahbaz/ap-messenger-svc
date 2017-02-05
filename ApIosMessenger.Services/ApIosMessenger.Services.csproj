@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="ContactsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UsersService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ApIosMessenger.Converters\ApIosMessenger.Converters.csproj">
