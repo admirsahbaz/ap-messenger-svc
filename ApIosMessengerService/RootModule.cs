@@ -3,12 +3,8 @@ using Nancy;
 using Nancy.ModelBinding;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
-using ApIosMessenger.Services;
 using Newtonsoft.Json;
-using System.Text;
 
 namespace ApIosMessengerService
 {
@@ -66,7 +62,17 @@ namespace ApIosMessengerService
             HttpStatusCode statusCode = HttpStatusCode.OK;
 
             if (model != null && ApIosMessenger.Services.UsersService.GetUserByEmailPassword(model.Email, model.Password))
-                token = Guid.NewGuid().ToString();
+            {
+                var payload = new Dictionary<string, object>()
+                {
+                    { "email", model.Email }
+                };
+
+                string secretKey = System.Configuration.ConfigurationManager.AppSettings["SecretKey"].ToString(); //System.Web.Configuration.WebConfigurationManager.AppSettings["SecretKey"];
+                byte[] secretKeyBytes = System.Text.Encoding.UTF8.GetBytes(secretKey);
+
+                token = Jose.JWT.Encode(payload, secretKeyBytes, Jose.JwsAlgorithm.HS256);
+            }
             else
                 statusCode = HttpStatusCode.Unauthorized;
 

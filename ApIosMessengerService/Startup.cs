@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using Owin;
+using Owin.StatelessAuth;
 
 namespace ApIosMessengerService
 {
@@ -10,7 +8,9 @@ namespace ApIosMessengerService
     {
         public void Configuration(IAppBuilder app)
         {
-            app.UseNancy();
+            app.RequiresStatelessAuth(new SecureTokenValidator(),
+              new StatelessAuthOptions() { IgnorePaths = new List<string>(new[] { "/", "/login", "/register" }) })
+                .UseNancy();
         }
     }
 }
