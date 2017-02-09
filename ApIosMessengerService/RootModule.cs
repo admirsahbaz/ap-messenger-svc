@@ -16,6 +16,50 @@ namespace ApIosMessengerService
             Post["/login", runAsync: true] = async (x, ct) => await Authenticate(this.Bind<LoginModel>());
             Post["/register", runAsync: true] = async (x, ct) => await Register(this.Bind<RegisterUser>());
             Post["/getContacts", runAsync: true] = async (x, ct) => await GetContacts(this.Bind<LoginModel>());
+            Get["GetRecents", runAsync: true] = async(x, ctor) => await GetRecents();
+            Post["GetMessages", runAsync: true] = async (x, ctor) => await GetMessages(this.Bind<GetMessagesModel>());
+        }
+
+        private async Task<dynamic> GetMessages(GetMessagesModel model)
+        {
+            HttpStatusCode statusCode = HttpStatusCode.OK;
+
+            var messages = await ApIosMessenger.Services.ChatService.GetMessagesForChatAndUser(model.ChatId, ((UserIdentity)Context.CurrentUser).UserId);
+            var jsonObj = JsonConvert.SerializeObject(messages);
+            return new Response()
+            {
+                ContentType = "application/json",
+                StatusCode = statusCode,
+                Contents = _ =>
+                {
+                    using (System.IO.StreamWriter w = new System.IO.StreamWriter(_))
+                    {
+                        w.Write(jsonObj);
+                        w.Flush();
+                    }
+                }
+            };
+        }
+
+        private async Task<dynamic> GetRecents()
+        {
+            HttpStatusCode statusCode = HttpStatusCode.OK;
+
+            var recents = await ApIosMessenger.Services.ChatService.GetRecentChats(((UserIdentity)Context.CurrentUser).UserId);
+            var jsonObj = JsonConvert.SerializeObject(recents);
+            return new Response()
+            {
+                ContentType = "application/json",
+                StatusCode = statusCode,
+                Contents = _ =>
+                {
+                    using (System.IO.StreamWriter w = new System.IO.StreamWriter(_))
+                    {
+                        w.Write(jsonObj);
+                        w.Flush();
+                    }
+                }
+            };
         }
 
         private async Task<dynamic> Register(RegisterUser model)
@@ -61,17 +105,24 @@ namespace ApIosMessengerService
             string token = "null";
             HttpStatusCode statusCode = HttpStatusCode.OK;
 
-            if (model != null && ApIosMessenger.Services.UsersService.GetUserByEmailPassword(model.Email, model.Password))
+            if (model != null)
             {
-                var payload = new Dictionary<string, object>()
+                var userId = await ApIosMessenger.Services.UsersService.GetUserIdByEmailPassword(model.Email, model.Password);
+                if (userId > 0)
                 {
-                    { "email", model.Email }
+                    var payload = new Dictionary<string, object>()
+                {
+                    { "email", model.Email },
+                    { "id", userId }
                 };
 
-                string secretKey = System.Configuration.ConfigurationManager.AppSettings["SecretKey"].ToString(); //System.Web.Configuration.WebConfigurationManager.AppSettings["SecretKey"];
-                byte[] secretKeyBytes = System.Text.Encoding.UTF8.GetBytes(secretKey);
+                    string secretKey = System.Configuration.ConfigurationManager.AppSettings["SecretKey"].ToString(); //System.Web.Configuration.WebConfigurationManager.AppSettings["SecretKey"];
+                    byte[] secretKeyBytes = System.Text.Encoding.UTF8.GetBytes(secretKey);
 
-                token = Jose.JWT.Encode(payload, secretKeyBytes, Jose.JwsAlgorithm.HS256);
+                    token = Jose.JWT.Encode(payload, secretKeyBytes, Jose.JwsAlgorithm.HS256);
+                }
+                else
+                    statusCode = HttpStatusCode.Unauthorized;
             }
             else
                 statusCode = HttpStatusCode.Unauthorized;

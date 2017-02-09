@@ -14,6 +14,11 @@ namespace ApIosMessenger.Services
         {
             return await UsersProvider.RegisterUser(usr);
         }
+        
+        public static async Task<int> GetUserIdByEmailPassword(string email, string password)
+        {
+            return await UsersProvider.GetUserIdByEmailPassword(email, password);
+        }
 
         public static bool GetUserByEmailPassword(string email, string password)
         {

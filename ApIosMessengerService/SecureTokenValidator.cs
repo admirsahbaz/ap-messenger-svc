@@ -19,8 +19,11 @@ namespace ApIosMessengerService
                 Dictionary<string, string> values = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
                 if (values.Count == 0)
                     return null;
-                
-                return new ClaimsPrincipal();
+                var claims = new List<Claim>();
+                claims.Add(new Claim("email", values["email"]));
+                claims.Add(new Claim("id", values["id"]));
+
+                return new ClaimsPrincipal(new ClaimsIdentity(claims, "Token"));
             }
             catch (Exception)
             {

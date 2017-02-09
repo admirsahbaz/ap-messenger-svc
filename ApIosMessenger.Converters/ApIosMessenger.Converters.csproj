@@ -44,6 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChatRecent.cs" />
+    <Compile Include="MessageConverter.cs" />
+    <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\Recent.cs" />
     <Compile Include="UserContact.cs" />
     <Compile Include="Models\UserAccount.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

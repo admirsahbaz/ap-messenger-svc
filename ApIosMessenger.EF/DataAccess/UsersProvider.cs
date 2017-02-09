@@ -30,6 +30,22 @@ namespace ApIosMessenger.EF.DataAccess
             }
         }
 
+        public static async Task<int> GetUserIdByEmailPassword(string email, string password)
+        {
+            try
+            {
+                using (var ctx = new EFContext())
+                {
+                    var usr = ctx.Users.Where(u => u.Email == email && u.Password == password).FirstOrDefault();
+                    return usr != null ? usr.Id : -1;
+                }
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
+        }
+
         public static bool GetUserByEmailPassword(string email, string password)
         {
             try
