@@ -15,7 +15,7 @@ namespace ApIosMessenger.EF.DataAccess
             {
                 using (var ctx = new EFContext())
                 {
-                    return ctx.Chats.Include("Users").Include("Messages").Where(c => c.Users.Any(u => u.Id == userId)).OrderBy(c => c.Messages.Max(m => m.MessageTime)).ToList();
+                    return ctx.Chats.Include("Users").Include("Messages").Where(c => c.Users.Any(u => u.Id == userId)).OrderByDescending(c => c.Messages.Max(m => m.MessageTime)).ToList();
                 }
             }
             catch (Exception)
