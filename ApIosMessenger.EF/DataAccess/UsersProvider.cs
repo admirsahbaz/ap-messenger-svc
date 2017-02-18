@@ -60,15 +60,15 @@ namespace ApIosMessenger.EF.DataAccess
                 return false;
             }
         }
-        public static bool UpdatePassword(int userId, string password)
+        public static bool UpdatePassword(int userId, string password, string currentPasswrod, string confirmPassword)
         {
             try
             {
                 using (var ctx = new EFContext())
                 {
                     //find user by id
-                    var user = ctx.Users.FirstOrDefault(u => u.Id == userId);
-                    if(user != null)
+                    var user = ctx.Users.FirstOrDefault(u => u.Id == userId && u.Password == currentPasswrod);
+                    if(user != null && password == confirmPassword)
                     {
                         user.Password = password;
                         ctx.SaveChangesAsync();

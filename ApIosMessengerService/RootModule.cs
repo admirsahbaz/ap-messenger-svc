@@ -25,14 +25,25 @@ namespace ApIosMessengerService
             HttpStatusCode statusCode = HttpStatusCode.OK;
             string message = "";
             bool success = false;
-            if (model != null && !string.IsNullOrWhiteSpace(model.Password))
+            if (model != null && !string.IsNullOrWhiteSpace(model.Password) && !string.IsNullOrWhiteSpace(model.CurrentPassword) && !string.IsNullOrWhiteSpace(model.ConfirmPassword) && model.ConfirmPassword== model.Password)
             {
-                success = ApIosMessenger.Services.UsersService.UpdatePassword(((UserIdentity)Context.CurrentUser).UserId, model.Password);
+                success = ApIosMessenger.Services.UsersService.UpdatePassword(((UserIdentity)Context.CurrentUser).UserId, model.Password, model.CurrentPassword, model.ConfirmPassword);
             }
             else
             {
                 statusCode = HttpStatusCode.InternalServerError;
-                message = "Unable to update password.";
+                if (string.IsNullOrWhiteSpace(model.Password) || string.IsNullOrWhiteSpace(model.CurrentPassword) || string.IsNullOrWhiteSpace(model.ConfirmPassword))
+                {
+                    message = "Unable to update password. Please enter your old password, new password and cofirm.";
+                }
+                else if (model.ConfirmPassword != model.Password)
+                {
+                    message = "Unable to update password. Password were not matching.";
+                }
+                else
+                {
+                    message = "Unable to update password.";
+                }
             }
             var obj = new { success = success, message = message };
             var jsonObj = JsonConvert.SerializeObject(obj);

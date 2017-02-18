@@ -24,9 +24,9 @@ namespace ApIosMessenger.Services
         {
             return UsersProvider.GetUserByEmailPassword(email, password);
         }
-        public static bool UpdatePassword(int userId, string password)
+        public static bool UpdatePassword(int userId, string password, string currentPassword, string confirmPassword)
         {
-            return UsersProvider.UpdatePassword(userId, password);
+            return UsersProvider.UpdatePassword(userId, password, currentPassword, confirmPassword);
         }
 
     }
