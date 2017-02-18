@@ -60,5 +60,30 @@ namespace ApIosMessenger.EF.DataAccess
                 return false;
             }
         }
+        public static bool UpdatePassword(int userId, string password)
+        {
+            try
+            {
+                using (var ctx = new EFContext())
+                {
+                    //find user by id
+                    var user = ctx.Users.FirstOrDefault(u => u.Id == userId);
+                    if(user != null)
+                    {
+                        user.Password = password;
+                        ctx.SaveChangesAsync();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

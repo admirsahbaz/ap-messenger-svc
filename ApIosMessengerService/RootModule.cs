@@ -18,6 +18,37 @@ namespace ApIosMessengerService
             Post["/getContacts", runAsync: true] = async (x, ct) => await GetContacts(this.Bind<LoginModel>());
             Get["GetRecents", runAsync: true] = async(x, ctor) => await GetRecents();
             Post["GetMessages", runAsync: true] = async (x, ctor) => await GetMessages(this.Bind<GetMessagesModel>());
+            Post["UpdatePassword", runAsync: true] = async (x, ct) => await UpdatePassword(this.Bind<UpdatePasswordModel>());
+        }
+        private dynamic UpdatePassword(UpdatePasswordModel model)
+        {
+            HttpStatusCode statusCode = HttpStatusCode.OK;
+            string message = "";
+            bool success = false;
+            if (model != null && !string.IsNullOrWhiteSpace(model.Password))
+            {
+                success = ApIosMessenger.Services.UsersService.UpdatePassword(((UserIdentity)Context.CurrentUser).UserId, model.Password);
+            }
+            else
+            {
+                statusCode = HttpStatusCode.InternalServerError;
+                message = "Unable to update password.";
+            }
+            var obj = new { success = success, message = message };
+            var jsonObj = JsonConvert.SerializeObject(obj);
+            return new Response()
+            {
+                ContentType = "application/json",
+                StatusCode = statusCode,
+                Contents = _ =>
+                {
+                    using (System.IO.StreamWriter w = new System.IO.StreamWriter(_))
+                    {
+                        w.Write(jsonObj);
+                        w.Flush();
+                    }
+                }
+            };
         }
 
         private async Task<dynamic> GetMessages(GetMessagesModel model)
