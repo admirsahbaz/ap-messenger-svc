@@ -19,6 +19,7 @@ namespace ApIosMessengerService
             Get["GetRecents", runAsync: true] = async(x, ctor) => await GetRecents();
             Post["GetMessages", runAsync: true] = async (x, ctor) => await GetMessages(this.Bind<GetMessagesModel>());
             Post["UpdatePassword", runAsync: true] = async (x, ct) => await UpdatePassword(this.Bind<UpdatePasswordModel>());
+            Get["GetUserDetails", runAsync: true] = async (x, ctor) => await GetUserDetails(this.Bind<GetUserDetailsModel>());
         }
         private dynamic UpdatePassword(UpdatePasswordModel model)
         {
@@ -38,7 +39,7 @@ namespace ApIosMessengerService
                 }
                 else if (model.ConfirmPassword != model.Password)
                 {
-                    message = "Unable to update password. Password were not matching.";
+                    message = "Unable to update password. Passwords were not matching.";
                 }
                 else
                 {
@@ -47,6 +48,26 @@ namespace ApIosMessengerService
             }
             var obj = new { success = success, message = message };
             var jsonObj = JsonConvert.SerializeObject(obj);
+            return new Response()
+            {
+                ContentType = "application/json",
+                StatusCode = statusCode,
+                Contents = _ =>
+                {
+                    using (System.IO.StreamWriter w = new System.IO.StreamWriter(_))
+                    {
+                        w.Write(jsonObj);
+                        w.Flush();
+                    }
+                }
+            };
+        }
+        private dynamic GetUserDetails(GetUserDetailsModel model)
+        {
+            HttpStatusCode statusCode = HttpStatusCode.OK;
+
+            var user = ApIosMessenger.Services.UsersService.GetUserDetails(model.Id);
+            var jsonObj = JsonConvert.SerializeObject(user);
             return new Response()
             {
                 ContentType = "application/json",

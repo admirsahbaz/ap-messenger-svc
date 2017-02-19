@@ -29,6 +29,21 @@ namespace ApIosMessenger.EF.DataAccess
                 return "An Error ocurred";
             }
         }
+        public static User GetUserDetails(int id)
+        {
+            try
+            {
+                using (var ctx = new EFContext())
+                {
+                    var user = ctx.Users.FirstOrDefault(u => u.Id == id);
+                    return user != null? user: new User();
+                }
+            }
+            catch (Exception)
+            {
+                return new User();
+            }
+        }
 
         public static async Task<int> GetUserIdByEmailPassword(string email, string password)
         {
